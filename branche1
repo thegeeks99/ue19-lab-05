@@ -1,1 +1,6 @@
-
+cd "C:\HELMO2024\gestion-sécu\labo5"
+git init 
+git add .
+git commit -m "Initial commit with app.py, Dockerfile, README.md, and requirements.txt"
+git remote add origin https://github.com/votre_nom_utilisateur/ue19-lab-05.git
+git remote add origin https://github.com/votre_nom_utilisateur/ue19-lab-05.git
