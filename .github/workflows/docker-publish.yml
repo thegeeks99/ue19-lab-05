@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: thegeeks99/ue19-lab-05
+  IMAGE_NAME: ${{ github.repository }}
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
