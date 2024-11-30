@@ -50,6 +50,12 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      # Step 4: Scan Docker image for vulnerabilities with Trivy
+      - name: Scan Docker image with Trivy
+        uses: aquasecurity/trivy-action@v0.11.0
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
       #generate artifact attestation
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
