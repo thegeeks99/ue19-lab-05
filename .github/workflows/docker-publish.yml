@@ -33,31 +33,40 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       #extract metadata(tags, labels)
-      - name: Extract metadata (tags, labels) for Docker
+      #- name: Extract metadata (tags, labels) for Docker
       
-        id: meta
-        uses: docker/metadata-action@v2
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        #id: meta
+        #uses: docker/metadata-action@v2
+        #with:
+          #images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       # Step 3: Build the Docker image
-      - name: Build and push Docker image
-        id: push
-        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      #- name: Build and push Docker image
+        #id: push
+        #uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        #with:
+          #context: .
+          #push: true
+          #tags: ${{ steps.meta.outputs.tags }}
+          #labels: ${{ steps.meta.outputs.labels }}
+
+      # Step 3: Build the Docker image
+      - name: Build Docker Image
+        run: docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest .
+      
 
       # Step 4: Scan Docker image for vulnerabilities with Trivy
       - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           scan-type: 'image'
           image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           severrity: 'HIGH,CRITICAL'
 
+      # Step 5: Push the Docker image to GitHub Packages
+      - name: Push Docker Image to GitHub Packages
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+      
       #generate artifact attestation
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
