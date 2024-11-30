@@ -52,7 +52,7 @@ jobs:
 
       # Step 4: Scan Docker image for vulnerabilities with Trivy
       - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@v0.30.1
+        uses: aquasecurity/trivy-action@0.30.0
         with:
           scan-type: 'image'
           image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
